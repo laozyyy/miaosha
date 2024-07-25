@@ -37,6 +37,7 @@ jobs:
           docker push registry.cn-hangzhou.aliyuncs.com/lazyyy1/miaosha;
   deployment:
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - name: 更新服务器
