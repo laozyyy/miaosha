@@ -32,10 +32,10 @@ jobs:
           docker build -t laozy/miaosha .
           docker push laozy/miaosha
 
-      - name: Save Docker image as tar
+      - name: 保存镜像
         run: docker save laozy/miaosha > miaosha.tar
 
-      - name: copy file via ssh password
+      - name: 发送镜像到服务器
         uses: appleboy/scp-action@v0.1.7
         with:
           host: 117.72.72.114
@@ -53,5 +53,5 @@ jobs:
           password: F1ly6kT?
           port: 22
           script:
-            docker load -i /home/images/miaosha.tar
+            docker load -i /home/images/miaosha.tar;
             docker run -d --name miaosha -p 8091:8091 --network 47bce5c74f589f4867dbd57e9ca9f808_env-network laozy/miaosha:latest;
