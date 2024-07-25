@@ -6,7 +6,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://117.72.72.114:3306/miaosha?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+    url: jdbc:mysql://117.72.72.114:13306/miaosha?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
