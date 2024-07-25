@@ -24,6 +24,8 @@ public class MiaoshaController {
     private IMiaoshaService miaoshaService;
     @Resource
     private IMiaoshaCacheService miaoshaCacheService;
+    @Resource
+    private IMiaoshaCacheService miaoshaCacheService2;
 
     /**
      * 线程数200，循环100次，TPS为3000~3600左右<br/>库存充足情况下无秒杀失败<br/>库存不充足情况下在单机房集群无并发问题
