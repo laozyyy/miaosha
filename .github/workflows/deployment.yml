@@ -35,7 +35,10 @@ jobs:
         run:
           docker login -u aliyun2526497059 -p zhongyiming2003 registry.cn-hangzhou.aliyuncs.com;
           docker push registry.cn-hangzhou.aliyuncs.com/lazyyy1/miaosha;
+  deployment:
+    runs-on: ubuntu-latest
 
+    steps:
       - name: 更新服务器
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -46,5 +49,6 @@ jobs:
           script:
             docker stop miaosha;
             docker rm miaosha;
+            docker login -u aliyun2526497059 -p zhongyiming2003 registry.cn-hangzhou.aliyuncs.com;
             docker pull registry.cn-hangzhou.aliyuncs.com/lazyyy1/miaosha;
             docker run -d --name miaosha -p 8091:8091 --network 47bce5c74f589f4867dbd57e9ca9f808_env-network registry.cn-hangzhou.aliyuncs.com/lazyyy1/miaosha:latest;
