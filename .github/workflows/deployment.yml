@@ -11,13 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Docker 登录
-        uses: docker/login-action@v3.1.0
-        with:
-          username: zym1614511838@gmail.com
-          password: zhongyiming2003
-
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
@@ -28,22 +21,13 @@ jobs:
         run: mvn clean package -Dmaven.compiler.source=17 -Dmaven.compiler.target=17 -DskipTests
 
       - name: 构建镜像
-        run: |
-          docker build -t laozy/miaosha .
-          docker push laozy/miaosha
+        run:
+          docker build -t registry.cn-hangzhou.aliyuncs.com/lazyyy1/miaosha .
 
-      - name: 保存镜像
-        run: docker save laozy/miaosha > miaosha.tar
-
-      - name: 发送镜像到服务器
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: 117.72.72.114
-          username: root
-          password: F1ly6kT?
-          port: 22
-          source: ./miaosha.tar
-          target: /home/images/miaosha.tar
+      - name: 连接阿里云
+        run:
+          echo "zhongyiming2003" | docker login --username=aliyun2526497059 registry.cn-hangzhou.aliyuncs.com;
+          docker push registry.cn-hangzhou.aliyuncs.com/lazyyy1/miaosha;
 
       - name: 更新服务器
         uses: appleboy/ssh-action@v0.1.10
@@ -53,5 +37,7 @@ jobs:
           password: F1ly6kT?
           port: 22
           script:
-            docker load -i /home/images/miaosha.tar;
-            docker run -d --name miaosha -p 8091:8091 --network 47bce5c74f589f4867dbd57e9ca9f808_env-network laozy/miaosha:latest;
+            docker stop miaosha;
+            docker rm miaosha;
+            docker pull registry.cn-hangzhou.aliyuncs.com/lazyyy1/miaosha;
+            docker run -d --name miaosha -p 8091:8091 --network 47bce5c74f589f4867dbd57e9ca9f808_env-network registry.cn-hangzhou.aliyuncs.com/lazyyy1/miaosha:latest;
